@@ -50,8 +50,8 @@ public class PlayerMover : MonoBehaviour
         movementVector = movementValue.Get<Vector2>();
     }
 
-    void OnJump(InputValue movementValue)
+    void OnJump(InputValue jumpVal)
     {
-        jumped = movementValue.isPressed;
+        jumped = jumpVal.isPressed;
     }
 }
