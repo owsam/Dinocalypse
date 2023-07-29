@@ -20,7 +20,7 @@ public class PlayerMover : MonoBehaviour
 
     void Start()
     {
-
+        weight *= 0.01f;
     }
 
     void Update()
