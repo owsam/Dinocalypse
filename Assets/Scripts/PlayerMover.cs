@@ -6,6 +6,7 @@ using UnityEngine.InputSystem;
 public class PlayerMover : MonoBehaviour
 {
     [SerializeField] private CharacterController controller;
+    [SerializeField] private Animator animator;
     [SerializeField] private float weight = 50;
 
     // Stuff from Unity
@@ -17,6 +18,9 @@ public class PlayerMover : MonoBehaviour
 
     private Vector2 movementVector = new();
     private bool jumped;
+
+    private float mass = 3.0F; // defines the character mass
+    private Vector3 impact = Vector3.zero;
 
     void Start()
     {
@@ -33,6 +37,10 @@ public class PlayerMover : MonoBehaviour
 
         Vector3 move = new Vector3(movementVector.x, 0, 0);
         controller.Move(playerSpeed * Time.deltaTime * move);
+        if(move != Vector3.zero)
+            animator.SetBool("walk", true);
+        else
+            animator.SetBool("walk", false);
 
         // Changes the height position of the player..
         if (jumped && groundedPlayer)
@@ -43,6 +51,12 @@ public class PlayerMover : MonoBehaviour
         playerVelocity.y += gravityValue * Time.deltaTime;
         controller.Move(playerVelocity * Time.deltaTime);
         jumped = false;
+
+        // apply the impact force:
+        if (impact.magnitude > 0.2F) controller.Move(impact * Time.deltaTime);
+        // consumes the impact energy each cycle:
+        impact = Vector3.Lerp(impact, Vector3.zero, Time.deltaTime / 2);
+        //if(impact == Vector3.zero)
     }
 
     void OnMove(InputValue movementValue)
@@ -53,5 +67,13 @@ public class PlayerMover : MonoBehaviour
     void OnJump(InputValue jumpVal)
     {
         jumped = jumpVal.isPressed;
+    }
+
+    public void AddImpact(Vector3 dir, float force)
+    {
+        dir.Normalize();
+        if (dir.y < 0) dir.y = -dir.y; // reflect down force on the ground
+        impact += dir.normalized * force / mass;
+        Debug.Log("throw",gameObject);
     }
 }

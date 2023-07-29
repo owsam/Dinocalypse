@@ -16,9 +16,10 @@ GameObject:
   - component: {fileID: 4841193100717108797}
   - component: {fileID: 1834185468593370382}
   - component: {fileID: 920027643851972763}
+  - component: {fileID: 7433700115864277051}
   m_Layer: 0
   m_Name: PlayerDummy
-  m_TagString: Untagged
+  m_TagString: Player
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -170,6 +171,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   grabPosition: {fileID: 4921194568561705857}
+  bigEntity: 0
 --- !u!143 &920027643851972763
 CharacterController:
   m_ObjectHideFlags: 0
@@ -196,6 +198,29 @@ CharacterController:
   m_SkinWidth: 0.08
   m_MinMoveDistance: 0.001
   m_Center: {x: 0, y: 0, z: 0}
+--- !u!136 &7433700115864277051
+CapsuleCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3928476848955350941}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 1
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Radius: 1
+  m_Height: 3
+  m_Direction: 1
+  m_Center: {x: 0, y: 0, z: 0}
 --- !u!1 &8404359347951081168
 GameObject:
   m_ObjectHideFlags: 0
@@ -209,7 +234,7 @@ GameObject:
   - component: {fileID: 2913822459678395217}
   - component: {fileID: 8650014081532323564}
   m_Layer: 0
-  m_Name: hand
+  m_Name: headPos
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -224,7 +249,7 @@ Transform:
   m_GameObject: {fileID: 8404359347951081168}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0.51, y: 0, z: -0.41}
+  m_LocalPosition: {x: -0.02, y: 1.41, z: -0.01}
   m_LocalScale: {x: 0.29289, y: 0.29289, z: 0.29289}
   m_ConstrainProportionsScale: 0
   m_Children: []

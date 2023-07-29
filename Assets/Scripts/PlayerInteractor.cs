@@ -6,9 +6,13 @@ using UnityEngine.InputSystem;
 public class PlayerInteractor : MonoBehaviour
 {
     [SerializeField] private Transform grabPosition;
+    [SerializeField] private float throwForce = 1000;
+    public bool bigEntity;
 
     private bool interacted;
     private bool collided;
+
+
 
     private Transform grabbedItem;
 
@@ -21,8 +25,25 @@ public class PlayerInteractor : MonoBehaviour
     {
         if (interacted && collided)
         {
+            if (grabbedItem.TryGetComponent(out PlayerInteractor inti) && inti.bigEntity)
+                return;
             grabbedItem.parent = grabPosition;
             grabbedItem.localPosition = Vector3.zero;
+        }
+
+        //if(interacted && grabPosition.childCount > 0)
+        //{
+        //    grabbedItem.parent = null;
+        //}
+
+        if (Input.GetKeyDown(KeyCode.G))
+        {
+            if (grabbedItem.TryGetComponent(out PlayerInteractor inti) && inti && !inti.bigEntity)
+            {
+                PlayerMover mover = grabbedItem.GetComponent<PlayerMover>();
+                mover.enabled = true;
+                mover.AddImpact(Vector3.up, 10);
+            }
         }
 
         interacted = false;
@@ -34,9 +55,11 @@ public class PlayerInteractor : MonoBehaviour
     }
 
 
+
+
     private void OnTriggerEnter(Collider other)
     {
-        if (other.transform.CompareTag("item"))
+        if (other.transform.CompareTag("item") || other.transform.CompareTag("Player"))
         {
             collided = true;
             grabbedItem = other.transform;
@@ -45,7 +68,7 @@ public class PlayerInteractor : MonoBehaviour
 
     private void OnTriggerExit(Collider other)
     {
-        if (other.transform.CompareTag("item"))
+        if (other.transform.CompareTag("item") || other.transform.CompareTag("Player"))
         {
             collided = false;
             grabbedItem = null;
